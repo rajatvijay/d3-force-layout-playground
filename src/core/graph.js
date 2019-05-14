@@ -4,15 +4,9 @@ const WIDTH = 500;
 const HEIGHT = 500;
 
 //Set up the colour scale
-const color = d3.scale.category20();
+const color = d3.scale.category10();
 
-//Set up the force layout
-const force = d3.layout
-  .force()
-  .charge(-120)
-  .linkDistance(50)
-  .size([WIDTH, HEIGHT]);
-
+let force;
 let svg;
 let graph, graphRec;
 let link;
@@ -21,16 +15,28 @@ let nodeDrag;
 let linkedByIndex = {};
 let tooltip;
 
-export function generateBasicGraph(data, containerId) {
+export function generateBasicGraph(
+  data,
+  containerId,
+  width = WIDTH,
+  height = HEIGHT
+) {
   graph = data;
   graphRec = JSON.parse(JSON.stringify(graph));
+
+  //Set up the force layout
+  force = d3.layout
+    .force()
+    .charge(-120)
+    .linkDistance(50)
+    .size([width, height]);
 
   //Append a SVG to the body of the html page. Assign this SVG as an object to svg
   svg = d3
     .select(`#${containerId}`)
     .append("svg")
-    .attr("width", WIDTH)
-    .attr("height", HEIGHT);
+    .attr("width", width)
+    .attr("height", height);
 
   //Set up tooltip
   tooltip = d3

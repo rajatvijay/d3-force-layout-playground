@@ -26,8 +26,10 @@ class Autocomplete extends Component {
   };
   render() {
     const { filteredOptions, inputValue, showOptions } = this.state;
+    const { placeholder } = this.props;
     return (
       <div className="root">
+        {placeholder && <span>{placeholder}</span>}
         <input
           type="text"
           value={inputValue}
@@ -52,5 +54,7 @@ function getFilteredOptions(value, options) {
   if (!value) {
     return [];
   }
-  return options.filter(option => option.includes(value));
+  return options.filter(option =>
+    option.toLowerCase().includes(value.toLowerCase())
+  );
 }

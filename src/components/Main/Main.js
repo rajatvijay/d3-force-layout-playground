@@ -20,7 +20,12 @@ class Main extends Component {
   };
 
   componentDidMount() {
-    generateBasicGraph(GRAPH_DATA, "force-graph");
+    generateBasicGraph(
+      GRAPH_DATA,
+      "force-graph",
+      window.innerWidth - 20,
+      window.innerHeight - 20
+    );
     enableTooltip();
   }
 
@@ -61,20 +66,22 @@ class Main extends Component {
         <div className="settings">
           <div>
             <Autocomplete
+              placeholder="Search Node: "
+              className="autocomplete-root"
               options={autocompleteOptions}
               onSelect={this.handleSearch}
             />
           </div>
           <div>
-            <span>0 </span>
+            <span>Breaklink: 0 </span>
             <input
               type="range"
               name="points"
               min="0"
-              max="10"
+              max="100"
               onChange={this.handleThresholdChange}
             />
-            <span>10 </span>
+            <span> 100</span>
           </div>
           <div>
             <input type="checkbox" onChange={this.handleToggleHighlighting} />

@@ -18,19 +18,19 @@ d3-tip {
 }
 
 /* Containers CSS */
-.root {
-  display: flex;
-}
-
-#force-graph {
-  flex: 1;
-}
-
 #force-graph > svg {
   margin: auto;
   display: block;
 }
 
 .settings {
-  flex: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  display: flex;
+  background: white;
+  padding: 10px 40px;
+  justify-content: space-between;
 }
