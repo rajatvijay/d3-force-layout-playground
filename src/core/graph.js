@@ -17,6 +17,7 @@ let svg;
 let graph, graphRec;
 let link;
 let node;
+let nodeDrag;
 let linkedByIndex = {};
 
 export function generateBasicGraph(data, containerId) {
@@ -65,6 +66,32 @@ export function generateBasicGraph(data, containerId) {
     })
     .style("stroke", "gray")
     .style("display", "none");
+
+  nodeDrag = d3.behavior
+    .drag()
+    .on("dragstart", dragstart)
+    .on("drag", dragmove)
+    .on("dragend", dragend);
+
+  function dragstart(d, i) {
+    force.stop(); // stops the force auto positioning before you start dragging
+  }
+  function dragmove(d, i) {
+    d.px += d3.event.dx;
+    d.py += d3.event.dy;
+    d.x += d3.event.dx;
+    d.y += d3.event.dy;
+  }
+  function dragend(d, i) {
+    d.fixed = true; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
+    force.resume();
+  }
+  function releasenode(d) {
+    d.fixed = false; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
+    //force.resume();
+  }
+
+  node.on("dblclick", releasenode).call(nodeDrag);
 
   //Creates the graph data structure out of the json data
   force
@@ -189,4 +216,23 @@ export function showLabels() {
 
 export function disableLabels() {
   node.selectAll("text").style("display", "none");
+}
+
+export function searchNode(selectedVal) {
+  //find the node
+  const node = svg.selectAll(".node");
+  if (!selectedVal) {
+    node.style("stroke", "white").style("stroke-width", "1");
+  } else {
+    const selected = node.filter(function(d, i) {
+      return d.name !== selectedVal;
+    });
+    selected.style("opacity", "0");
+    var link = svg.selectAll(".link");
+    link.style("opacity", "0");
+    d3.selectAll(".node, .link")
+      .transition()
+      .duration(5000)
+      .style("opacity", 1);
+  }
 }

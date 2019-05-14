@@ -1,0 +1,18 @@
+.root {
+  position: relative;
+}
+
+.options-list {
+  list-style-type: none;
+  border: 1px solid;
+  background: white;
+  padding: 0;
+  position: absolute;
+  max-height: 200px;
+  overflow: scroll;
+}
+
+li:hover {
+  background: #eeeeee;
+  cursor: pointer;
+}

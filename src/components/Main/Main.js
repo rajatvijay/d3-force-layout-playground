@@ -6,18 +6,21 @@ import {
   enableHighlighting,
   disableHighlighting,
   showLabels,
-  disableLabels
+  disableLabels,
+  searchNode
 } from "../../core";
 import "./Main.css";
+import Autocomplete from "./Autocomplete";
 
 class Main extends Component {
   state = {
-    data: GRAPH_DATA
+    // data: GRAPH_DATA,
+    autocompleteOptions: GRAPH_DATA.nodes.map(d => d.name)
   };
 
   componentDidMount() {
-    const { data } = this.state;
-    generateBasicGraph(data, "force-graph");
+    // const { data } = this.state;
+    generateBasicGraph(GRAPH_DATA, "force-graph");
   }
 
   handleThresholdChange = e => {
@@ -43,11 +46,22 @@ class Main extends Component {
     }
   };
 
+  handleSearch = selectedOption => {
+    searchNode(selectedOption);
+  };
+
   render() {
+    const { autocompleteOptions } = this.state;
     return (
       <div className="root">
         <div id="force-graph" />
         <div className="settings">
+          <div>
+            <Autocomplete
+              options={autocompleteOptions}
+              onSelect={this.handleSearch}
+            />
+          </div>
           <div>
             <span>0 </span>
             <input
