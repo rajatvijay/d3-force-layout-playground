@@ -11,6 +11,22 @@
 - Toggle label a particular node
 - Automatic tooltip toogling on the basis of labels
 
+### See how it works with huge data
+
+Replace
+
+```
+import GRAPH_DATA from "../../dataForMoviesAndActorsWithLessData";
+```
+
+with
+
+```
+import GRAPH_DATA from "../../dataForMoviesAndActors";
+```
+
+**in Main.js (Main component file)**
+
 ### Credits
 
 - [http://www.coppelia.io/2014/07/an-a-to-z-of-extra-features-for-the-d3-force-layout/](http://www.coppelia.io/2014/07/an-a-to-z-of-extra-features-for-the-d3-force-layout/)
