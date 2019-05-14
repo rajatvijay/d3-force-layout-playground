@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import GRAPH_DATA from "../../data";
+import GRAPH_DATA from "../../dataForMoviesAndActors";
 import {
   generateBasicGraph,
   threshold,
