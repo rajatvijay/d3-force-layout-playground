@@ -12,6 +12,11 @@
   font: 9px helvetica;
 }
 
+d3-tip {
+  line-height: 1;
+  color: black;
+}
+
 /* Containers CSS */
 .root {
   display: flex;

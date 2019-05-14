@@ -19,6 +19,7 @@ let link;
 let node;
 let nodeDrag;
 let linkedByIndex = {};
+let tooltip;
 
 export function generateBasicGraph(data, containerId) {
   graph = data;
@@ -30,6 +31,16 @@ export function generateBasicGraph(data, containerId) {
     .append("svg")
     .attr("width", WIDTH)
     .attr("height", HEIGHT);
+
+  //Set up tooltip
+  tooltip = d3
+    .tip()
+    .attr("class", "d3-tip")
+    .offset([-10, 0])
+    .html(function(d) {
+      return d.name + "";
+    });
+  svg.call(tooltip);
 
   //Create all the line svgs but without locations yet
   link = svg
@@ -235,4 +246,12 @@ export function searchNode(selectedVal) {
       .duration(5000)
       .style("opacity", 1);
   }
+}
+
+export function enableTooltip() {
+  node.on("mouseover", tooltip.show).on("mouseout", tooltip.hide);
+}
+
+export function disableTooltip() {
+  node.on("mouseover", null).on("mouseout", null);
 }

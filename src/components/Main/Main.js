@@ -7,20 +7,21 @@ import {
   disableHighlighting,
   showLabels,
   disableLabels,
-  searchNode
+  searchNode,
+  enableTooltip,
+  disableTooltip
 } from "../../core";
 import "./Main.css";
 import Autocomplete from "./Autocomplete";
 
 class Main extends Component {
   state = {
-    // data: GRAPH_DATA,
     autocompleteOptions: GRAPH_DATA.nodes.map(d => d.name)
   };
 
   componentDidMount() {
-    // const { data } = this.state;
     generateBasicGraph(GRAPH_DATA, "force-graph");
+    enableTooltip();
   }
 
   handleThresholdChange = e => {
@@ -41,8 +42,10 @@ class Main extends Component {
     const { checked } = e.target;
     if (checked) {
       showLabels();
+      disableTooltip();
     } else {
       disableLabels();
+      enableTooltip();
     }
   };
 
