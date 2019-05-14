@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import GRAPH_DATA from "../../dataForMoviesAndActors";
+import GRAPH_DATA from "../../dataForMoviesAndActorsWithLessData";
 import {
   generateBasicGraph,
   threshold,
@@ -14,11 +14,9 @@ import {
 import "./Main.css";
 import Autocomplete from "./Autocomplete";
 
-class Main extends Component {
-  state = {
-    autocompleteOptions: GRAPH_DATA.nodes.map(d => d.name)
-  };
+const AUTOCOMPLETE_OPTIONS = GRAPH_DATA.nodes.map(d => d.name);
 
+class Main extends Component {
   componentDidMount() {
     generateBasicGraph(
       GRAPH_DATA,
@@ -59,7 +57,6 @@ class Main extends Component {
   };
 
   render() {
-    const { autocompleteOptions } = this.state;
     return (
       <div className="root">
         <div id="force-graph" />
@@ -70,7 +67,7 @@ class Main extends Component {
             <Autocomplete
               placeholder="Search Node: "
               className="autocomplete-root"
-              options={autocompleteOptions}
+              options={AUTOCOMPLETE_OPTIONS}
               onSelect={this.handleSearch}
             />
           </div>
