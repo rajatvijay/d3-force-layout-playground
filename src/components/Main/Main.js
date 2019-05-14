@@ -4,7 +4,9 @@ import {
   generateBasicGraph,
   threshold,
   enableHighlighting,
-  disableHighlighting
+  disableHighlighting,
+  showLabels,
+  disableLabels
 } from "../../core";
 import "./Main.css";
 
@@ -32,6 +34,15 @@ class Main extends Component {
     }
   };
 
+  handleToggleLabels = e => {
+    const { checked } = e.target;
+    if (checked) {
+      showLabels();
+    } else {
+      disableLabels();
+    }
+  };
+
   render() {
     return (
       <div className="root">
@@ -51,6 +62,10 @@ class Main extends Component {
           <div>
             <input type="checkbox" onChange={this.handleToggleHighlighting} />
             <span>Enable highlighting</span>
+          </div>
+          <div>
+            <input type="checkbox" onChange={this.handleToggleLabels} />
+            <span>Enable Lables</span>
           </div>
         </div>
       </div>

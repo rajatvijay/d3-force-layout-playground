@@ -1,3 +1,4 @@
+/* Graph CSS */
 .node {
   stroke: #fff;
   stroke-width: 1.5px;
@@ -7,6 +8,11 @@
   stroke-opacity: 0.6;
 }
 
+.node text {
+  font: 9px helvetica;
+}
+
+/* Containers CSS */
 .root {
   display: flex;
 }

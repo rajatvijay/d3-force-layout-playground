@@ -42,17 +42,29 @@ export function generateBasicGraph(data, containerId) {
     });
 
   //Do the same with the circles for the nodes - no
-  node = svg
+  node = node = svg
     .selectAll(".node")
     .data(graph.nodes)
     .enter()
-    .append("circle")
+    .append("g")
     .attr("class", "node")
+    .call(force.drag);
+  node
+    .append("circle")
     .attr("r", 8)
     .style("fill", function(d) {
       return color(d.group);
+    });
+
+  node
+    .append("text")
+    .attr("dx", 10)
+    .attr("dy", ".35em")
+    .text(function(d) {
+      return d.name;
     })
-    .call(force.drag);
+    .style("stroke", "gray")
+    .style("display", "none");
 
   //Creates the graph data structure out of the json data
   force
@@ -75,12 +87,18 @@ export function generateBasicGraph(data, containerId) {
       .attr("y2", function(d) {
         return d.target.y;
       });
-
-    node
+    d3.selectAll("circle")
       .attr("cx", function(d) {
         return d.x;
       })
       .attr("cy", function(d) {
+        return d.y;
+      });
+    d3.selectAll("text")
+      .attr("x", function(d) {
+        return d.x;
+      })
+      .attr("y", function(d) {
         return d.y;
       });
   });
@@ -163,4 +181,12 @@ function restart() {
     .attr("r", 5)
     .call(force.drag);
   force.start();
+}
+
+export function showLabels() {
+  node.selectAll("text").style("display", "block");
+}
+
+export function disableLabels() {
+  node.selectAll("text").style("display", "none");
 }
