@@ -1,68 +1,41 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![d3-force-layout-playground](https://github.com/rajatvijay/d3-force-layout-playground/blob/master/art/banner.png?raw=true)
 
-## Available Scripts
+<p align="center"><a href="#" target="_blank" style="font-size: 28px;">D3 Force Layout Playground</a></p>
 
-In the project directory, you can run:
+### Features
 
-### `npm start`
+- Generate realtime force layout using the data
+- Toggle higlighting a particular node
+- Search for a node using autocomplete
+- Change the breaklink throshold and see changes in the realtime
+- Toggle label a particular node
+- Automatic tooltip toogling on the basis of labels
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Credits
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+- [http://www.coppelia.io/2014/07/an-a-to-z-of-extra-features-for-the-d3-force-layout/](http://www.coppelia.io/2014/07/an-a-to-z-of-extra-features-for-the-d3-force-layout/)
+- B - The threshold link breaking should be enabled (based on the strength of the link)
+- H - enable the highlighting thing which shows only the relevant & connected neighbours
+- L - You have to apply labels, but there should a toggle button to switch on and off the labels
+- P - Enable pinning of the nodes
+- S - Enable search of the node
+- T - Enable tool tip (when the labels are off)
 
-### `npm test`
+### Dvelopment Guide
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Deployments for every commits using now.sh
+- Uses eslint and prettier for linting and formatting with pre-commit hook
+- CSS is written using using CSS modules
+- **Made some TODOs for the remaining functionalities**
 
-### `npm run build`
+### Like it?
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+:star: this repo
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+### Found a bug?
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Raise an issue!
 
-### `npm run eject`
+### License
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+MIT © [rajatvijay](https://github.com/rajatvijay)
