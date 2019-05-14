@@ -17,6 +17,7 @@ let svg;
 let graph, graphRec;
 let link;
 let node;
+let linkedByIndex = {};
 
 export function generateBasicGraph(data, containerId) {
   graph = data;
@@ -94,6 +95,56 @@ export function threshold(thresh) {
     }
   }
   restart();
+}
+
+// Toggle code
+export function enableHighlighting() {
+  //Create an array logging what is connected to what
+  for (let i = 0; i < graph.nodes.length; i++) {
+    linkedByIndex[i + "," + i] = 1;
+  }
+  graph.links.forEach(function(d) {
+    linkedByIndex[d.source.index + "," + d.target.index] = 1;
+  });
+
+  node.on("dblclick", toggleHighlight());
+}
+
+export function disableHighlighting() {
+  linkedByIndex = {};
+  node.on("dblclick", null);
+}
+
+//This function looks up whether a pair are neighbours
+function neighboring(a, b) {
+  return linkedByIndex[a.index + "," + b.index];
+}
+
+function toggleHighlight() {
+  let isHighlighting = true;
+  return function onHighlight() {
+    if (isHighlighting) {
+      //Reduce the opacity of all but the neighbouring nodes
+      const d = d3.select(this).node().__data__;
+      node.style("opacity", function(o) {
+        return neighboring(d, o) | neighboring(o, d) ? 1 : 0.1;
+      });
+      link.style("opacity", function(o) {
+        return (d.index === o.source.index) | (d.index === o.target.index)
+          ? 1
+          : 0.1;
+      });
+      // //Reduce the op
+      // toggle = 1;
+      isHighlighting = false;
+    } else {
+      //Put them back to opacity=1
+      node.style("opacity", 1);
+      link.style("opacity", 1);
+      // toggle = 0;
+      isHighlighting = true;
+    }
+  };
 }
 
 //Restart the visualisation after any node and link changes

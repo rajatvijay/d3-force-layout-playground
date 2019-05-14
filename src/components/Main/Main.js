@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import GRAPH_DATA from "../../data";
-import { generateBasicGraph, threshold } from "../../core";
+import {
+  generateBasicGraph,
+  threshold,
+  enableHighlighting,
+  disableHighlighting
+} from "../../core";
 import "./Main.css";
 
 class Main extends Component {
@@ -18,6 +23,15 @@ class Main extends Component {
     threshold(value);
   };
 
+  handleToggleHighlighting = e => {
+    const { checked } = e.target;
+    if (checked) {
+      enableHighlighting();
+    } else {
+      disableHighlighting();
+    }
+  };
+
   render() {
     return (
       <div className="root">
@@ -33,6 +47,10 @@ class Main extends Component {
               onChange={this.handleThresholdChange}
             />
             <span>10 </span>
+          </div>
+          <div>
+            <input type="checkbox" onChange={this.handleToggleHighlighting} />
+            <span>Enable highlighting</span>
           </div>
         </div>
       </div>
