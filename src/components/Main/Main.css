@@ -1,0 +1,25 @@
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+.link {
+  stroke: #999;
+  stroke-opacity: 0.6;
+}
+
+.root {
+  display: flex;
+}
+
+#force-graph {
+  flex: 1;
+}
+
+#force-graph > svg {
+  margin: auto;
+  display: block;
+}
+
+.settings {
+  flex: 1;
+}
