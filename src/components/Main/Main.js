@@ -63,6 +63,8 @@ class Main extends Component {
     return (
       <div className="root">
         <div id="force-graph" />
+
+        {/* TODO: Move settings as a separate component */}
         <div className="settings">
           <div>
             <Autocomplete
@@ -79,17 +81,18 @@ class Main extends Component {
               name="points"
               min="0"
               max="100"
+              defaultValue="0"
               onChange={this.handleThresholdChange}
             />
             <span> 100</span>
           </div>
           <div>
             <input type="checkbox" onChange={this.handleToggleHighlighting} />
-            <span>Enable highlighting</span>
+            <span> Enable highlighting</span>
           </div>
           <div>
             <input type="checkbox" onChange={this.handleToggleLabels} />
-            <span>Enable Lables</span>
+            <span> Enable Lables</span>
           </div>
         </div>
       </div>

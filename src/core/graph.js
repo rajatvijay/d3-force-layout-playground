@@ -59,7 +59,7 @@ export function generateBasicGraph(
       return Math.sqrt(d.value);
     });
 
-  //Do the same with the circles for the nodes - no
+  //Make nodes
   node = node = svg
     .selectAll(".node")
     .data(graph.nodes)
@@ -67,6 +67,8 @@ export function generateBasicGraph(
     .append("g")
     .attr("class", "node")
     .call(force.drag);
+
+  // Add circles
   node
     .append("circle")
     .attr("r", 8)
@@ -74,6 +76,7 @@ export function generateBasicGraph(
       return color(d.group);
     });
 
+  // Add labels
   node
     .append("text")
     .attr("dx", 10)
@@ -84,30 +87,14 @@ export function generateBasicGraph(
     .style("stroke", "gray")
     .style("display", "none");
 
+  // Add drag
   nodeDrag = d3.behavior
     .drag()
     .on("dragstart", dragstart)
     .on("drag", dragmove)
     .on("dragend", dragend);
 
-  function dragstart(d, i) {
-    force.stop(); // stops the force auto positioning before you start dragging
-  }
-  function dragmove(d, i) {
-    d.px += d3.event.dx;
-    d.py += d3.event.dy;
-    d.x += d3.event.dx;
-    d.y += d3.event.dy;
-  }
-  function dragend(d, i) {
-    d.fixed = true; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
-    force.resume();
-  }
-  function releasenode(d) {
-    d.fixed = false; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
-    //force.resume();
-  }
-
+  // Add listener for drag relase
   node.on("dblclick", releasenode).call(nodeDrag);
 
   //Creates the graph data structure out of the json data
@@ -138,6 +125,8 @@ export function generateBasicGraph(
       .attr("cy", function(d) {
         return d.y;
       });
+
+    // Coordinates for labels
     d3.selectAll("text")
       .attr("x", function(d) {
         return d.x;
@@ -148,6 +137,34 @@ export function generateBasicGraph(
   });
 }
 
+/**
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * Drage helpers * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * ** * * * * * * * * * *
+ */
+function dragstart(d, i) {
+  force.stop(); // stops the force auto positioning before you start dragging
+}
+function dragmove(d, i) {
+  d.px += d3.event.dx;
+  d.py += d3.event.dy;
+  d.x += d3.event.dx;
+  d.y += d3.event.dy;
+}
+function dragend(d, i) {
+  d.fixed = true; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
+  force.resume();
+}
+function releasenode(d) {
+  d.fixed = false; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
+  //force.resume();
+}
+
+/**
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * Threshold helpers * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * ** * * * * * * * * * * * * *
+ */
 export function threshold(thresh) {
   graph.links.splice(0, graph.links.length);
 
@@ -159,7 +176,29 @@ export function threshold(thresh) {
   restart();
 }
 
-// Toggle code
+//Restart the visualisation after any node and link changes
+function restart() {
+  link = link.data(graph.links);
+  link.exit().remove();
+  link
+    .enter()
+    .insert("line", ".node")
+    .attr("class", "link");
+  node = node.data(graph.nodes);
+  node
+    .enter()
+    .insert("circle", ".cursor")
+    .attr("class", "node")
+    .attr("r", 5)
+    .call(force.drag);
+  force.start();
+}
+
+/**
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * Highlighting helpers * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * ** * * * * * * * * * * * * *
+ */
 export function enableHighlighting() {
   //Create an array logging what is connected to what
   for (let i = 0; i < graph.nodes.length; i++) {
@@ -209,24 +248,11 @@ function toggleHighlight() {
   };
 }
 
-//Restart the visualisation after any node and link changes
-function restart() {
-  link = link.data(graph.links);
-  link.exit().remove();
-  link
-    .enter()
-    .insert("line", ".node")
-    .attr("class", "link");
-  node = node.data(graph.nodes);
-  node
-    .enter()
-    .insert("circle", ".cursor")
-    .attr("class", "node")
-    .attr("r", 5)
-    .call(force.drag);
-  force.start();
-}
-
+/**
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * Labels helpers * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * ** * * * * * * * * * * * * *
+ */
 export function showLabels() {
   node.selectAll("text").style("display", "block");
 }
@@ -235,6 +261,11 @@ export function disableLabels() {
   node.selectAll("text").style("display", "none");
 }
 
+/**
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * Search node helpers * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * ** * * * * * * * * * * * * *
+ */
 export function searchNode(selectedVal) {
   //find the node
   const node = svg.selectAll(".node");
@@ -254,6 +285,11 @@ export function searchNode(selectedVal) {
   }
 }
 
+/**
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * Tooltip helpers * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * ** * * * * * * * * * * * * *
+ */
 export function enableTooltip() {
   node.on("mouseover", tooltip.show).on("mouseout", tooltip.hide);
 }

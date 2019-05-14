@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./Autocomplete.css";
 
+// TODO: Add accessibilities functionalities
 class Autocomplete extends Component {
   state = {
     filteredOptions: [],
