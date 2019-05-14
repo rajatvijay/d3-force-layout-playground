@@ -214,6 +214,9 @@ export function enableHighlighting() {
 export function disableHighlighting() {
   linkedByIndex = {};
   node.on("dblclick", null);
+
+  // Readding the drag listener
+  node.on("dblclick", releasenode).call(nodeDrag);
 }
 
 //This function looks up whether a pair are neighbours
